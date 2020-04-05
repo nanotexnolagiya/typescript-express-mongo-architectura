@@ -1,36 +1,27 @@
-import { Document, Model, Types } from 'mongoose'
+import { Document, Model, FilterQuery } from 'mongoose';
+import { injectable, unmanaged } from 'inversify';
 
-export interface IBaseRepository<T> {
-  create: (...item: T[]) => Promise<T[]>
-  find: (query: any) => Promise<T[]>
-  update: (id: Types.ObjectId, item: T) => Promise<T>
-  remove: (id: Types.ObjectId) => Promise<T>
-  findOne: (query: any) => Promise<T>
-}
+@injectable()
+export abstract class BaseRepository<T extends Document> {
+  constructor(@unmanaged() private _model: Model<T>) {}
 
-
-export class BaseRepository<T extends Document> implements IBaseRepository<T> {
-  constructor(private _model: Model<Document>) {
-
-  }
-
-  async create(...items: T[]): Promise<T[]> {
-    return await this._model.create(...items)
+  async create(...items: T[]): Promise<T> {
+    return this._model.create(...items);
   }
 
   async find(query: object): Promise<T[]> {
-    return await this._model.find(query)
+    return this._model.find(query);
   }
 
-  async update(id: Types.ObjectId, item: T): Promise<T> {
-    return await this._model.update({ _id: id }, item)
+  async update(conditions: FilterQuery<T>, item: T): Promise<T> {
+    return this._model.update(conditions, item);
   }
 
-  async remove(id: Types.ObjectId): Promise<T> {
-    return await this._model.remove({ _id: id })
+  async remove(conditions: FilterQuery<T>): Promise<any> {
+    return this._model.remove(conditions);
   }
 
   async findOne(query: object): Promise<T> {
-    return await this._model.findOne(query)
+    return this._model.findOne(query);
   }
 }

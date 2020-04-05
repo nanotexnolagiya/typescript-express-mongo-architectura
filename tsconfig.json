@@ -10,7 +10,7 @@
     "outDir": "dist",
     "preserveConstEnums": true,
     "sourceMap": true,
-    "removeComments": true,
+    "removeComments": true
   },
   "exclude": [
     "node_modules",
