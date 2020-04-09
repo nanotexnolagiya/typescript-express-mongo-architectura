@@ -1,3 +1,4 @@
 export const ServicesTypes = {
-  UserServices: Symbol('UserServices')
+  UserServices: Symbol('UserServices'),
+  AuthServices: Symbol('AuthServices')
 };
