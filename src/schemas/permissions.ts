@@ -1,11 +1,12 @@
 import { Schema, Document, Types } from 'mongoose';
+import { v4 as uuidv4 } from 'uuid'
+import { IRoles } from "./roles";
 
 export interface IPermission extends Document {
   name: string;
   code: string;
   languageId: string;
-  languageHash: string;
-  roles: string[];
+  languageHash?: string;
 }
 
 export const PermissionScheme: Schema = new Schema({
@@ -15,11 +16,8 @@ export const PermissionScheme: Schema = new Schema({
     type: Types.ObjectId,
     ref: 'Languages'
   },
-  languageHash: String,
-  roles: [
-    {
-      type: Types.ObjectId,
-      ref: 'Roles'
-    }
-  ]
+  languageHash: {
+    type: String,
+    default: uuidv4()
+  }
 });

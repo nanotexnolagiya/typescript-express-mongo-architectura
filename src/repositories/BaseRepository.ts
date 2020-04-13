@@ -3,7 +3,7 @@ import { injectable, unmanaged } from 'inversify';
 
 @injectable()
 export abstract class BaseRepository<T extends Document> {
-  constructor(@unmanaged() private _model: Model<T>) {}
+  protected constructor(@unmanaged() private _model: Model<T>) {}
 
   async create(...items: T[]): Promise<T> {
     return this._model.create(...items);

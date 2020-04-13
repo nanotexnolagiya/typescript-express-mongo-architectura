@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import './controllers';
 import { json, urlencoded } from 'body-parser';
-import * as Debug from 'debug';
 import * as express from 'express';
 import * as createError from 'http-errors';
 import * as logger from 'morgan';
@@ -10,7 +9,7 @@ import { connect } from 'mongoose';
 import { Server } from './Server';
 import { config } from './config';
 
-const debug = Debug('app:server');
+const debug = console.log;
 
 Server
   .setConfig((app: express.Application) => {
@@ -62,6 +61,7 @@ connect(
     useCreateIndex: true
   })
   .then(() => {
+    import('./seeders')
     Application.listen(Application.get('port'), () => {
       debug(`App is running at http://localhost:${Application.get('port')} in ${Application.get('env')} mode`);
       debug('Press CTRL-C to stop');

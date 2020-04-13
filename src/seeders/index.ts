@@ -1,3 +1,4 @@
 import { UserSeeder } from './UserSeeder';
-
-UserSeeder.seeding();
+(async () => {
+    await UserSeeder.seeding();
+})()
